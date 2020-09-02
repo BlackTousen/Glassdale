@@ -5,9 +5,12 @@
     flex-flow: column;
     padding: 5px;
     flex-basis: 15%;
+    /* width: 300px; */
 }
 .criminalsContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    overflow-x: auto;
+    /* width: 300px; */
 }
