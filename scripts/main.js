@@ -4,6 +4,7 @@ import { getConvictions } from "./convictions/ConvictionProvider.js"
 import { CriminalList } from "./criminals/Criminal.js"
 import { ConvictionSelect } from "./convictions/ConvictionSelect.js"
 import { OfficerSelect } from "./officers/OfficerSelect.js"
+import { NoteForm } from "./Notes/NoteForm.js"
 // getCriminals()
 // .then(_ => {
 //     const contentTarget = document.querySelector(".criminalsContainer")
@@ -12,6 +13,7 @@ import { OfficerSelect } from "./officers/OfficerSelect.js"
 // getOfficers();
 // getConvictions()
 // .then(_ => ConvictionSelect())
+NoteForm()
 CriminalList()
 ConvictionSelect()
 OfficerSelect()
