@@ -19,6 +19,7 @@ const render = (officerCollection) => {
     <button id="saveNote">Save Note</button>
     `;
 };
+
 eventHub.addEventListener("click", (clickEvent) => {
   clickEvent.preventDefault();
   if (clickEvent.target.id === "saveNote") {
@@ -39,6 +40,7 @@ eventHub.addEventListener("click", (clickEvent) => {
     }
   }
 });
+
 export const NoteForm = () => {
   let officerCollection;
   getOfficers()

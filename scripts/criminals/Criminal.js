@@ -1,4 +1,5 @@
 import { useCriminals, getCriminals } from "./CriminalProvider.js"
+import { AlibiDialog } from "./Alibi.js"
 
 
 const eventHub = document.querySelector(".container")
@@ -46,6 +47,19 @@ eventHub.addEventListener("officerSelected", event => {
         render(matchingOfficers)
 })
 
+eventHub.addEventListener("click", event => {
+    // How can you access the officer name that was selected by the user?
+    if (event.target.id.startsWith("associates--")) {
+        let [prefix,id] = event.target.id.split("--")
+        const alibiEvent = new CustomEvent("alibiClicked", {
+            detail: {
+                chosenCriminal: id
+            }
+        })
+        eventHub.dispatchEvent(alibiEvent)
+    }
+})
+
 const render = criminalCollection => {
     const contentTarget = document.querySelector(".criminalsContainer")
 
@@ -58,6 +72,8 @@ const render = criminalCollection => {
      <p>Term Start: ${new Date(x.incarceration.start).toLocaleDateString('en-US')}</p>
      <p>Term End: ${new Date(x.incarceration.end).toLocaleDateString('en-US')}</p>
      </div>
+     <button id="associates--${x.id}">Associate Alibis</button>
+     ${AlibiDialog(x.id)}
    </section>
     `
     )
