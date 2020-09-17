@@ -6,7 +6,7 @@ const dispatchStateChangeEvent = () => {
     eventHub.dispatchEvent(noteStateChangedEvent)
 }
 
-const getNotes = () => {
+export const getNotes = () => {
     return fetch('http://localhost:8088/notes')
         .then(response => response.json())
         .then(parsedNotes => {
@@ -14,7 +14,10 @@ const getNotes = () => {
         })
 
 }
-
+export const useNotes = () => { 
+    let notesCopy = notes
+    return notesCopy
+}
 export const saveNote = note => {
     return fetch('http://localhost:8088/notes', {
         method: "POST",

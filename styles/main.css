@@ -16,3 +16,13 @@
     overflow-x: auto;
     /* width: 300px; */
 }
+aside {
+    float: right;
+    clear: right;
+    height: 80vh;
+    overflow: auto;
+    border: black double 2px;
+}
+.container {
+    height: 100%;
+}

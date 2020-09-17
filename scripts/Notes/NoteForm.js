@@ -1,49 +1,57 @@
-import { saveNote } from "./NoteDataProvider.js";
-import { useOfficers, getOfficers } from "../officers/OfficerProvider.js";
-
+import { getCriminals, useCriminals } from "../criminals/CriminalProvider.js"
+import {saveNote} from "./NoteDataProvider.js";
+/*
+	A bunch of input boxes related to the note information
+*/
+const eventHub = document.querySelector(".container")
 const contentTarget = document.querySelector(".noteFormContainer");
-const eventHub = document.querySelector(".container");
 
-const render = (officerCollection) => {
-  console.log("rendering officers dropdown");
-  contentTarget.innerHTML = `
-    <label for="note-text">Text</label><input type="text" id="note-text">
-    <select class="dropdown" id="note-suspect">
-    <label for="note-suspect">Suspect</label>
-        <option value="0">Please select a criminal...</option>
-    ${officerCollection.map((cObj) => {
-      return `<option id="${cObj.id}" value="${cObj.name}">${cObj.name}</option>`;
-    })}
-</select>
+eventHub.addEventListener("click", clickEvent => {
+	if(clickEvent.target.id === "saveNote"){
 
-    <button id="saveNote">Save Note</button>
-    `;
-};
+		const noteContent = document.querySelector("#noteForm--text")
+		const noteCriminal = document.querySelector("#noteForm--criminal")
 
-eventHub.addEventListener("click", (clickEvent) => {
-  clickEvent.preventDefault();
-  if (clickEvent.target.id === "saveNote") {
-      console.log("dropdown value",document.getElementById("note-suspect").value)
-    if (document.getElementById("note-suspect").value === "0") {
-      window.alert("Must choose a suspect!");
-    } else {
-      // Make a new object representation of a note
-      const newNote = {
-        // Key/value pairs here
-        text: document.getElementById("note-text").value,
-        date: Date.now(),
-        suspect: document.getElementById("note-suspect").value,
-      };
+		if(noteCriminal.value !== "0"){
+			const newNote = {
+				noteText: noteContent.value,
+				suspectId: parseInt(noteCriminal.value),
+				date: Date.now()
+			}
 
-      // Change API state and application state
-      saveNote(newNote);
-    }
-  }
-});
+			saveNote(newNote);
+
+		}else {
+			window.alert("Choose a Suspect");
+		}
+
+
+
+	}
+})
+
+const render = (criminalArray) => {
+    contentTarget.innerHTML = `
+		<h3>New Note Details</h3>
+		<div>
+			<select class="dropdown" id="noteForm--criminal">
+				<option value="0">Please select a criminal...</option>
+				${
+                	criminalArray.map(criminalObject => {
+                    	return `<option value="${criminalObject.id}">${criminalObject.name}</option>`
+                	}).join("")
+            	}
+			</select>
+			<textarea id="noteForm--text" placeholder="Put a note here"></textarea>
+			<button id="saveNote">Save Note</button>
+		</div>
+    `
+}
 
 export const NoteForm = () => {
-  let officerCollection;
-  getOfficers()
-    .then((_) => (officerCollection = useOfficers()))
-    .then((_) => render(officerCollection));
-};
+	getCriminals()
+	.then(() => {
+		render(useCriminals());
+	})
+    
+}

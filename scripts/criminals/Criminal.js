@@ -76,6 +76,6 @@ const render = criminalCollection => {
      ${AlibiDialog(x.id)}
    </section>
     `
-    )
+    ).join("")
 }
 
